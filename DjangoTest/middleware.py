@@ -4,7 +4,7 @@
 # @Author     : WangPengDa
 # @Description:
 # @Software   : PyCharm
-import asyncio
+import re
 import sys
 import time
 import logging
@@ -15,7 +15,30 @@ from django.http import JsonResponse
 from django.utils.deprecation import MiddlewareMixin
 
 from DjangoTest.common.exception_base import ProjectException
+from DjangoTest.common.redis_operate import get_token_from_redis
 from DjangoTest.common.response import ResponseDict
+
+
+class TokenMiddleWare(MiddlewareMixin):
+    white_list = ["/admin", "/user"]
+
+    def process_request(self, request):
+        # 放行路径
+        for pattern in self.white_list:
+            if re.search(pattern, request.path_info):
+                return None
+        res = ResponseDict()
+        token = request.headers.get('access-token')
+        if token is None:
+            res.code = 401
+            res.message = f"缺少 token"
+            return JsonResponse(res)
+        # 查询 redis 中 token 是否存在
+        redis_token = get_token_from_redis(token)
+        if redis_token is None:
+            res.code = 404
+            res.message = f'没有此token'
+            return JsonResponse(res)
 
 
 class ExceptionMiddleWare(MiddlewareMixin):

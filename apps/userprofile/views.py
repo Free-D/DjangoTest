@@ -6,9 +6,9 @@ from rest_framework.viewsets import ModelViewSet
 
 from DjangoTest.common.redis_operate import set_token_to_redis
 from DjangoTest.common.response import ResponseDict
-from userprofile.models import UserProfile
-from userprofile.serializers import UserSerializer
-from userprofile.token_generate import TokenGenerate
+from apps.userprofile.models import UserProfile
+from apps.userprofile.serializers import UserSerializer
+from apps.userprofile.token_generate import TokenGenerate
 
 
 class UserViewSet(ModelViewSet):

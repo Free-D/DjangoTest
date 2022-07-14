@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from app1 import urls as stu
-from userprofile import urls as user
+from apps.stu import urls as stu
+from apps.userprofile import urls as user
 
 urlpatterns = [
     path('admin/', admin.site.urls),

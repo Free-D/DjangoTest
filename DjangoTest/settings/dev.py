@@ -15,7 +15,10 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+# Build log path
+BASE_LOG_DIR = os.path.join(BASE_DIR, "log")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -24,6 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ny%!819q@v@k+6a%394%uhrf988#ix=6&y#lr88ez&fs=oqt3m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -39,8 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'app1',
-    'userprofile',
+    'apps.stu',
+    'apps.userprofile',
 ]
 
 REST_FRAMEWORK = {
@@ -90,6 +94,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'DjangoTest.middleware.ExceptionMiddleWare',
+    'DjangoTest.middleware.TokenMiddleWare',
 ]
 
 ROOT_URLCONF = 'DjangoTest.urls'
@@ -111,8 +116,6 @@ TEMPLATES = [
         },
     },
 ]
-
-BASE_LOG_DIR = os.path.join(BASE_DIR, "log")
 
 LOGGING = {
     # 版本
@@ -185,7 +188,7 @@ LOGGING = {
         'django.db.backends': {
             'handlers': ['console'],
             'propagate': True,
-            'level':'DEBUG',
+            'level': 'DEBUG',
         },
         'stu': {
             'handlers': ['stu', "console"],
@@ -215,7 +218,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django-test',
         'USER': 'root',
-        'PASSWORD': 'password',
+        'PASSWORD': '密码',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     },
@@ -228,7 +231,7 @@ CACHES = {
         "LOCATION": "redis://@127.0.0.1:6379/15",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": "password"
+            "PASSWORD": "密码"
         }
     }
 }

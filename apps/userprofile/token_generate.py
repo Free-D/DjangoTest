@@ -6,7 +6,7 @@
 # @Software   : PyCharm
 
 import jwt
-from DjangoTest import settings
+from DjangoTest.settings import dev
 
 
 def TokenGenerate(userid, username, *args):
@@ -25,7 +25,7 @@ def TokenGenerate(userid, username, *args):
         'userid': userid,  # 用户表id
         'user_code': username  # 用户名
     }
-    salt = settings.SECRET_KEY
+    salt = dev.SECRET_KEY
     token = jwt.encode(payload=payload, key=salt, algorithm='HS256', headers=headers).decode('utf-8')
     return token
 
